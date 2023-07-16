@@ -12,10 +12,19 @@ import {
   FlatList,
   SectionList,
   TextInput,
+  TouchableOpacity,
+  TouchableHighlight,
+  TouchableWithoutFeedback,
+  Pressable,
 } from 'react-native';
 
 function App(): JSX.Element {
   const [Name, setName] = useState('');
+  const [Submitted, setSubmitted] = useState(false);
+
+  const onPressHandler = () => {
+    setSubmitted(!Submitted);
+  };
   return (
     <View style={styles.body}>
       <Text style={styles.text}>Please write your name :</Text>
@@ -29,7 +38,51 @@ function App(): JSX.Element {
         editable={true}
         secureTextEntry={true}
       />
-      <Text style={styles.text}>your name is : {Name}</Text>
+      {/* <Button
+        title={Submitted ? 'Clear' : 'Submit'}
+        onPress={onPressHandler}
+        // disabled={Submitted}
+        color="#00f"
+      /> */}
+      {/* <TouchableOpacity
+        onPress={onPressHandler}
+        style={styles.button}
+        activeOpacity={0.2}>
+        <Text style={styles.text}>{Submitted ? 'Clear' : 'Submit'}</Text>
+      </TouchableOpacity> */}
+      {/* <TouchableHighlight
+        onPress={onPressHandler}
+        style={styles.button}
+        activeOpacity={0.2}
+        underlayColor="#dddddd">
+        <Text style={styles.text}>{Submitted ? 'Clear' : 'Submit'}</Text>
+      </TouchableHighlight> */}
+      {/* <TouchableWithoutFeedback onPress={onPressHandler} style={styles.button}>
+        <View style={styles.button}>
+          <Text style={styles.text}>{Submitted ? 'Clear' : 'Submit'}</Text>
+        </View>
+      </TouchableWithoutFeedback> */}
+
+      {/* pressable longpress 쓸때, press 영역 키울때 유리 */}
+      <Pressable
+        // onPress={onPressHandler}
+        onLongPress={onPressHandler}
+        delayLongPress={1000}
+        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
+        android_ripple={{color: '#00f'}}
+        style={({pressed}) => [
+          {
+            backgroundColor: pressed ? '#dddddd' : '#00ff00',
+          },
+          styles.button,
+        ]}>
+        <View style={styles.button}>
+          <Text style={styles.text}>{Submitted ? 'Clear' : 'Submit'}</Text>
+        </View>
+      </Pressable>
+      {Submitted ? (
+        <Text style={styles.text}>you are registered as {Name}</Text>
+      ) : null}
     </View>
   );
 }
@@ -52,6 +105,13 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     textAlign: 'center',
     fontSize: 20,
+    marginBottom: 10,
+  },
+  button: {
+    width: 150,
+    height: 50,
+    // backgroundColor: '#00ff00',
+    alignItems: 'center',
   },
 });
 
