@@ -14,56 +14,53 @@ import {
 } from 'react-native';
 
 function App(): JSX.Element {
+  // const [TitleIdx, setTitleIdx] = useState(2);
   const [Items, setItems] = useState([
-    {name: 'Item 1'},
-    {name: 'Item 2'},
-    {name: 'Item 3'},
-    {name: 'Item 4'},
-    {name: 'Item 5'},
-    {name: 'Item 6'},
-    {name: 'Item 7'},
-    {name: 'Item 8'},
-    {name: 'Item 9'},
-    {name: 'Item 27'},
-    {name: 'Item 78'},
+    {
+      title: 'Title 1',
+      data: ['Item 1-1', 'Item 1-2'],
+    },
   ]);
   const [Refreshing, setRefreshing] = useState(false);
 
   const DATA = [
     {
       title: 'Title 1',
-      data: ['Item 1-1', 'Item 1-2', 'Item 1-3'],
-    },
-    {
-      title: 'Title 2',
-      data: ['Item 2-1', 'Item 2-2', 'Item 2-3'],
-    },
-    {
-      title: 'Title 3',
-      data: ['Item 3-1'],
-    },
-    {
-      title: 'Title 4',
-      data: ['Item 4-1', 'Item 4-2'],
+      data: ['Item 1-1', 'Item 1-2'],
     },
   ];
 
   const onRefresh = () => {
+    // setTitleIdx(TitleIdx + 1);
     setRefreshing(true);
-    setItems([...Items, {name: 'Item 69'}]);
+    const add_TitleIdx = Items.length + 1;
+    setItems([
+      ...Items,
+      {
+        title: `Title ${add_TitleIdx}`,
+        data: [`Item ${add_TitleIdx}-1`, `Item ${add_TitleIdx}-2`],
+      },
+    ]);
     setRefreshing(false);
   };
 
   return (
     <SectionList
       keyExtractor={(item, index) => index.toString()}
-      sections={DATA}
+      sections={Items}
       renderItem={({item}) => <Text style={styles.text}>{item}</Text>}
       renderSectionHeader={({section}) => (
         <View style={styles.item}>
           <Text style={styles.text}>{section.title}</Text>
         </View>
       )}
+      refreshControl={
+        <RefreshControl
+          refreshing={Refreshing}
+          onRefresh={onRefresh}
+          colors={['#ff00ff']}
+        />
+      }
     />
     // <FlatList
     //   // numColumns={2}
