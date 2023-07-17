@@ -16,6 +16,8 @@ import {
   TouchableHighlight,
   TouchableWithoutFeedback,
   Pressable,
+  Alert,
+  ToastAndroid,
 } from 'react-native';
 
 function App(): JSX.Element {
@@ -23,7 +25,48 @@ function App(): JSX.Element {
   const [Submitted, setSubmitted] = useState(false);
 
   const onPressHandler = () => {
-    setSubmitted(!Submitted);
+    if (Name.length > 3) {
+      setSubmitted(!Submitted);
+    } else {
+      // Alert.alert(
+      //   'Warning',
+      //   'The name must be longer than 3 characters',
+      //   [
+      //     {
+      //       text: 'Do not show again',
+      //       onPress: () => console.warn('Do not show again Pressed'),
+      //       style: 'destructive',
+      //     },
+      //     {
+      //       text: 'Cancel',
+      //       onPress: () => console.warn('Cancel Pressed'),
+      //       style: 'destructive',
+      //     },
+      //     {
+      //       text: 'Ok',
+      //       onPress: () => console.warn('Ok Pressed'),
+      //       style: 'destructive',
+      //     },
+      //   ],
+      //   {cancelable: true, onDismiss: () => console.warn('Alert dismissed')},
+      // );
+      // ToastAndroid.show(
+      //   'The name must be longer than 3 characters',
+      //   ToastAndroid.LONG
+      // );
+      // ToastAndroid.showWithGravity(
+      //   'The name must be longer than 3 characters',
+      //   ToastAndroid.SHORT,
+      //   ToastAndroid.TOP,
+      // );
+      ToastAndroid.showWithGravityAndOffset(
+        'The name must be longer than 3 characters',
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER,
+        0,
+        0,
+      );
+    }
   };
   return (
     <View style={styles.body}>
@@ -36,7 +79,7 @@ function App(): JSX.Element {
         keyboardType={'default'}
         maxLength={10}
         editable={true}
-        secureTextEntry={true}
+        // secureTextEntry={true}
       />
       {/* <Button
         title={Submitted ? 'Clear' : 'Submit'}
@@ -65,9 +108,9 @@ function App(): JSX.Element {
 
       {/* pressable longpress 쓸때, press 영역 키울때 유리 */}
       <Pressable
-        // onPress={onPressHandler}
-        onLongPress={onPressHandler}
-        delayLongPress={1000}
+        onPress={onPressHandler}
+        // onLongPress={onPressHandler}
+        // delayLongPress={1000}
         hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
         android_ripple={{color: '#00f'}}
         style={({pressed}) => [
