@@ -19,6 +19,7 @@ import {
   Alert,
   ToastAndroid,
   Modal,
+  Image,
 } from 'react-native';
 
 function App(): JSX.Element {
@@ -114,8 +115,22 @@ function App(): JSX.Element {
         </View>
       </Pressable>
       {Submitted ? (
-        <Text style={styles.text}>you are registered as {Name}</Text>
-      ) : null}
+        <View style={styles.body}>
+          <Text style={styles.text}>you are registered as {Name}</Text>
+          <Image
+            style={styles.image}
+            source={require('./assets/done.png')}
+            resizeMode="stretch"
+          />
+        </View>
+      ) : (
+        <Image
+          style={styles.image}
+          source={require('./assets/error.png')}
+          resizeMode="stretch"
+          blurRadius={5}
+        />
+      )}
     </View>
   );
 }
@@ -179,6 +194,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#00ffff',
     borderBottomLeftRadius: 20,
     borderBottomRightRadius: 20,
+  },
+  image: {
+    width: 100,
+    height: 100,
+    margin: 10,
   },
 });
 
