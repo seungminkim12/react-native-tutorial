@@ -21,6 +21,8 @@ import {
   Modal,
   Image,
 } from 'react-native';
+import MashButton from './CustomButton';
+import Header from './Header';
 
 function App(): JSX.Element {
   const [Name, setName] = useState('');
@@ -36,6 +38,7 @@ function App(): JSX.Element {
   };
   return (
     <View style={styles.body}>
+      <Header />
       <Modal
         visible={showWarning}
         onRequestClose={() => setshowWarning(false)}
@@ -98,22 +101,18 @@ function App(): JSX.Element {
       </TouchableWithoutFeedback> */}
 
       {/* pressable longpress 쓸때, press 영역 키울때 유리 */}
-      <Pressable
-        onPress={onPressHandler}
-        // onLongPress={onPressHandler}
-        // delayLongPress={1000}
-        hitSlop={{top: 10, bottom: 10, left: 10, right: 10}}
-        android_ripple={{color: '#00f'}}
-        style={({pressed}) => [
-          {
-            backgroundColor: pressed ? '#dddddd' : '#00ff00',
-          },
-          styles.button,
-        ]}>
-        <View style={styles.button}>
-          <Text style={styles.text}>{Submitted ? 'Clear' : 'Submit'}</Text>
-        </View>
-      </Pressable>
+      <MashButton
+        onPressFunction={onPressHandler}
+        title={Submitted ? 'Clear' : 'Submit'}
+        color={'#00ff00'}
+        style={{margin: 10}}
+      />
+      <MashButton
+        onPressFunction={onPressHandler}
+        title={Submitted ? 'Clear' : 'Submit'}
+        color={'#ff00ff'}
+        style={{margin: 10}}
+      />
       {Submitted ? (
         <View style={styles.body}>
           <Text style={styles.text}>you are registered as {Name}</Text>
